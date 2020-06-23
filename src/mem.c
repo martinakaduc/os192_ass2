@@ -16,14 +16,14 @@ static struct
 } _mem_stat[NUM_PAGES];
 
 static pthread_mutex_t mem_lock;
-static pthread_mutex_t ram_lock;
+// static pthread_mutex_t ram_lock;
 
 void init_mem(void)
 {
     memset(_mem_stat, 0, sizeof(*_mem_stat) * NUM_PAGES);
     memset(_ram, 0, sizeof(BYTE) * RAM_SIZE);
     pthread_mutex_init(&mem_lock, NULL);
-    pthread_mutex_init(&ram_lock, NULL);
+    // pthread_mutex_init(&ram_lock, NULL);
 }
 
 /* get offset of the virtual address */
@@ -317,9 +317,9 @@ int write_mem(addr_t address, struct pcb_t *proc, BYTE data)
     addr_t physical_addr;
     if (translate(address, &physical_addr, proc))
     {
-        pthread_mutex_unlock(&ram_lock);
+        // pthread_mutex_unlock(&ram_lock);
         _ram[physical_addr] = data;
-        pthread_mutex_unlock(&ram_lock);
+        // pthread_mutex_unlock(&ram_lock);
 
         return 0;
     }
